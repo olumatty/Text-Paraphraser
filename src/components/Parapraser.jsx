@@ -17,13 +17,14 @@ const Parapraser = () => {
     var myHeaders = new Headers();
     myHeaders.append("apikey", "Tn0TYjIRfsPJVj6j98QvwWM5ZlsBQqVs");
     myHeaders.append("Content-Type", "text/plain");
-  
+
+    var raw = inputText
   
     var requestOptions = {
       method: "POST",
       redirect: "follow",
       headers: myHeaders,
-      body:inputText
+      body:raw
     };
   
 
@@ -36,9 +37,9 @@ const Parapraser = () => {
       if (!response.ok) throw new Error("Something went wrong");
 
       const data = await response.json();
-      setResult(data.paraphrased);
+      setResult(data?.paraphrased || "No paraphrased text found")
     } catch (error) {
-      setResult("Somethig went wrong");
+      setResult("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -53,10 +54,10 @@ const Parapraser = () => {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           rows={10}
-          className="border mt-3 p-2     h-[280px] md:h-[320px] w-[300px] md:w-[360px] outline-none rounded"
+          className="border mt-3 p-2 h-[280px] md:h-[320px] w-[300px] md:w-[360px] outline-none rounded"
         />
         <textarea
-          value={result}
+          value={result || ''}
           readOnly
           rows={10}
           className="border mt-3 h-[280px] md:h-[320px] w-[300px] md:w-[360px] outline-none rounded"
